@@ -45,7 +45,7 @@ const roles = ['Student', 'Faculty', 'Hostel / Canteen', 'Admin', 'Volunteer'];
 function App() {
   const [activePage, setActivePage] = useState('home');
   const [student, setStudent] = useState(() => JSON.parse(localStorage.getItem('campus-user') || 'null') || defaultStudent);
-  const [signedIn, setSignedIn] = useState(() => Boolean(localStorage.getItem('campus-user')));
+  const [signedIn, setSignedIn] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('campus-theme') === 'dark');
 
   useEffect(() => {
