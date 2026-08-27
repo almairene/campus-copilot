@@ -44,6 +44,46 @@
   background: var(--primary);
 }
 
+.campus-welcome-banner {
+  position: relative;
+  min-height: 172px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #173d42;
+  box-shadow: 0 14px 30px rgba(25, 62, 62, .12);
+  animation: riseIn .55s ease both;
+}
+
+.campus-welcome-banner img {
+  width: 100%;
+  height: 172px;
+  display: block;
+  object-fit: cover;
+  opacity: .72;
+}
+
+.campus-welcome-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(13, 46, 49, .9), rgba(13, 46, 49, .25) 70%, rgba(13, 46, 49, .1));
+}
+
+.welcome-overlay, .welcome-stat { position: absolute; z-index: 1; }
+.welcome-overlay { top: 25px; left: 28px; color: white; }
+.welcome-overlay .visual-badge { padding: 6px 9px; font-size: .62rem; }
+.welcome-overlay h3 { margin: 14px 0 5px; font-size: 1.35rem; letter-spacing: -.03em; }
+.welcome-overlay p { margin: 0; color: rgba(255,255,255,.72); font-size: .76rem; }
+.welcome-stat { right: 26px; bottom: 24px; display: grid; color: white; text-align: right; }.welcome-stat strong { font-size: 1.4rem; }.welcome-stat span { color: rgba(255,255,255,.7); font-size: .65rem; }
+
+.campus-moments { margin-top: 24px; animation: riseIn .55s .14s ease both; }
+.moment-heading { display: flex; align-items: end; justify-content: space-between; margin-bottom: 12px; }.moment-heading h3 { margin: 4px 0 0; font-size: 1.1rem; }.moment-mark { color: var(--muted); font: 700 .68rem monospace; }
+.moment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }.moment-card { position: relative; min-height: 174px; overflow: hidden; padding: 0; border: 0; border-radius: 14px; color: white; text-align: left; background: #24464a; box-shadow: 0 10px 22px rgba(20, 42, 40, .1); }.moment-card::after { content: ''; position: absolute; inset: 35% 0 0; background: linear-gradient(transparent, rgba(7, 29, 31, .9)); }.moment-card img { width: 100%; height: 174px; display: block; object-fit: cover; transition: transform .45s ease, filter .45s ease; }.moment-card:hover img { transform: scale(1.06); filter: saturate(1.12); }.moment-card span, .moment-card small { position: absolute; z-index: 1; left: 15px; }.moment-card span { bottom: 34px; font-size: .88rem; font-weight: 750; }.moment-card small { bottom: 15px; color: rgba(255,255,255,.7); font-size: .64rem; }
+
+@keyframes riseIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.dashboard-grid { animation: riseIn .55s .08s ease both; }.section-card { transition: border-color .2s ease, box-shadow .2s ease; }.section-card:hover { border-color: rgba(17, 168, 137, .22); box-shadow: 0 13px 30px rgba(20, 56, 50, .08); }
+
 * {
   box-sizing: border-box;
 }
