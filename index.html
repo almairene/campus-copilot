@@ -4,14 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campus Copilot</title>
-    <!-- React CDN & Babel Compiler -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Load main.jsx using Babel -->
-    <script type="text/babel" src="./main.jsx"></script>
+
+    <script type="text/babel">
+      function App() {
+        return (
+          <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+            <h1>Campus Copilot</h1>
+            <p>App is running successfully on GitHub Pages!</p>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
   </body>
 </html>
