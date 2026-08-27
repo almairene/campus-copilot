@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import TopBar from './components/TopBar';
 import HomePage from './pages/HomePage';
@@ -22,6 +22,7 @@ const navItems = [
   { id: 'lost', label: 'Lost', icon: '🧭' },
   { id: 'canteen', label: 'Canteen', icon: '🍽️' },
   { id: 'exchange', label: 'Exchange', icon: '🔄' },
+  { id: 'insights', label: 'Insights', icon: '⌁' },
   { id: 'profile', label: 'Profile', icon: '👤' },
 ];
 
@@ -32,16 +33,25 @@ const secondaryNavItems = [
 ];
 
 const defaultStudent = {
-  name: '',
-  rollNo: '',
-  department: '',
-  year: '',
+  name: 'Anna Nair',
+  rollNo: 'IN-2047',
+  department: 'Instrumentation',
+  year: '3rd Year',
+  role: 'Student',
 };
+
+const roles = ['Student', 'Faculty', 'Hostel / Canteen', 'Admin', 'Volunteer'];
 
 function App() {
   const [activePage, setActivePage] = useState('home');
-  const [student, setStudent] = useState(defaultStudent);
-  const [signedIn, setSignedIn] = useState(false);
+  const [student, setStudent] = useState(() => JSON.parse(localStorage.getItem('campus-user') || 'null') || defaultStudent);
+  const [signedIn, setSignedIn] = useState(() => Boolean(localStorage.getItem('campus-user')));
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('campus-theme') === 'dark');
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+    localStorage.setItem('campus-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -51,10 +61,11 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!student.name || !student.rollNo || !student.department || !student.year) {
+    if (!student.name || !student.rollNo || !student.department || !student.year || !student.role) {
       return;
     }
 
+    localStorage.setItem('campus-user', JSON.stringify(student));
     setSignedIn(true);
   };
 
@@ -80,6 +91,8 @@ function App() {
         return <ClassmatesPage />;
       case 'alumni':
         return <AlumniPage />;
+      case 'insights':
+        return <HomePage studentName={student.name || 'Anna'} onSelectAction={(actionId) => setActivePage(actionId)} insightsOnly />;
       case 'home':
       default:
         return <HomePage studentName={student.name || 'Anna'} onSelectAction={(actionId) => setActivePage(actionId)} />;
@@ -93,12 +106,21 @@ function App() {
           <div className="brand-block auth-brand">
             <div className="brand-mark">C</div>
             <div>
-              <p className="eyebrow">Student portal</p>
+              <p className="eyebrow">Intelligent campus ecosystem</p>
               <h1>Campus Copilot</h1>
             </div>
           </div>
 
-          <h2>Sign in</h2>
+          <h2>Welcome back</h2>
+          <p className="auth-subtitle">Your smart companion for campus life.</p>
+
+          <div className="role-picker" aria-label="Choose your role">
+            {roles.map((role) => (
+              <button key={role} type="button" className={student.role === role ? 'active' : ''} aria-pressed={student.role === role} onClick={() => setStudent((previous) => ({ ...previous, role }))}>
+                {role}
+              </button>
+            ))}
+          </div>
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <label>
@@ -199,7 +221,7 @@ function App() {
       </aside>
 
       <main className="main-panel">
-        <TopBar studentName={student.name || 'Anna'} />
+        <TopBar studentName={student.name || 'Anna'} darkMode={darkMode} onToggleTheme={() => setDarkMode((value) => !value)} />
         <div className="page-transition">
           {renderPage()}
         </div>

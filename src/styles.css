@@ -14,6 +14,36 @@
   --shadow: 0 18px 30px rgba(31, 41, 55, 0.08);
 }
 
+.auth-subtitle {
+  margin: -10px 0 22px;
+  color: var(--muted);
+}
+
+.role-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.role-picker button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 12px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.role-picker button:hover,
+.role-picker button.active {
+  border-color: var(--primary);
+  color: white;
+  background: var(--primary);
+}
+
 * {
   box-sizing: border-box;
 }
