@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 import FeedbackPage from './pages/FeedbackPage';
 import ClassmatesPage from './pages/ClassmatesPage';
 import AlumniPage from './pages/AlumniPage';
+import TransportPage from './pages/TransportPage';
 import './styles.css';
 
 const navItems = [
@@ -21,6 +22,7 @@ const navItems = [
   { id: 'help', label: 'Help', icon: '🤝' },
   { id: 'lost', label: 'Lost', icon: '🧭' },
   { id: 'canteen', label: 'Canteen', icon: '🍽️' },
+  { id: 'transport', label: 'Transport', icon: '🚌' },
   { id: 'exchange', label: 'Exchange', icon: '🔄' },
   { id: 'insights', label: 'Insights', icon: '⌁' },
   { id: 'profile', label: 'Profile', icon: '👤' },
@@ -76,6 +78,8 @@ function App() {
         return <LostFoundPage />;
       case 'canteen':
         return <CanteenPage />;
+      case 'transport':
+        return <TransportPage />;
       case 'exchange':
         return <ExchangePage />;
       case 'profile':

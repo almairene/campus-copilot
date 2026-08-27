@@ -46,6 +46,13 @@ function CampusFinderPage() {
         />
       </div>
 
+      <section className="place-rail">
+        <div className="place-rail-heading"><div><p className="eyebrow">Explore campus</p><h3>Find your place</h3></div><span>Tap a view to open directions</span></div>
+        <div className="place-card-grid">
+          {[['Hostel life', 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80', 'Hostel'], ['Classrooms', 'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=600&q=80', 'Main Block'], ['Computer labs', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80', 'Computer Lab'], ['Instrumentation lab', 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80', 'Instrumentation Lab']].map(([title, image, location]) => <button key={title} type="button" className="place-card" onClick={() => { setSelectedLocation(location); setLateMode(false); }}><img src={image} alt={title} /><span>{title}</span><small>View directions →</small></button>)}
+        </div>
+      </section>
+
       <div className="campus-finder-grid">
         <section className="section-card map-panel">
           <div className="section-heading compact">
