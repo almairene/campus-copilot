@@ -32,20 +32,15 @@ const secondaryNavItems = [
   { id: 'alumni', label: 'Alumni', icon: '🎓' },
 ];
 
-const defaultStudent = {
-  name: 'Anna Nair',
-  rollNo: 'IN-2047',
-  department: 'Instrumentation',
-  year: '3rd Year',
-  role: 'Student',
-};
+const defaultStudent = { name: '', rollNo: '', department: '', year: '', role: '' };
 
-const roles = ['Student', 'Faculty', 'Hostel / Canteen', 'Admin', 'Volunteer'];
+const roles = ['Student', 'Teacher', 'Hostel / Canteen', 'Admin', 'Volunteer'];
 
 function App() {
   const [activePage, setActivePage] = useState('home');
   const [student, setStudent] = useState(() => JSON.parse(localStorage.getItem('campus-user') || 'null') || defaultStudent);
   const [signedIn, setSignedIn] = useState(false);
+  const [authStep, setAuthStep] = useState(1);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('campus-theme') === 'dark');
 
   useEffect(() => {
@@ -102,6 +97,9 @@ function App() {
   if (!signedIn) {
     return (
       <div className="auth-screen">
+        <div className="auth-visual">
+          <div className="auth-visual-copy"><span className="visual-badge">PSG iTech · Connected campus</span><h2>Make every campus moment count.</h2><p>One intelligent place for learning, people, food, movement, and community.</p></div>
+        </div>
         <div className="auth-card">
           <div className="brand-block auth-brand">
             <div className="brand-mark">C</div>
@@ -111,16 +109,23 @@ function App() {
             </div>
           </div>
 
-          <h2>Welcome back</h2>
-          <p className="auth-subtitle">Your smart companion for campus life.</p>
+          <div className="auth-progress"><span className={authStep === 1 ? 'active' : 'done'}>01 <b>Who are you?</b></span><i /><span className={authStep === 2 ? 'active' : ''}>02 <b>Your details</b></span></div>
 
-          <div className="role-picker" aria-label="Choose your role">
-            {roles.map((role) => (
-              <button key={role} type="button" className={student.role === role ? 'active' : ''} aria-pressed={student.role === role} onClick={() => setStudent((previous) => ({ ...previous, role }))}>
-                {role}
-              </button>
-            ))}
-          </div>
+          {authStep === 1 ? <>
+            <h2>Let’s get started</h2>
+            <p className="auth-subtitle">Choose your campus role to personalize your experience.</p>
+            <div className="role-picker role-cards" aria-label="Choose your role">
+              {roles.map((role) => (
+                <button key={role} type="button" className={student.role === role ? 'active' : ''} aria-pressed={student.role === role} onClick={() => setStudent((previous) => ({ ...previous, role }))}>
+                  <span>{role === 'Student' ? '◉' : role === 'Teacher' ? '▣' : role === 'Hostel / Canteen' ? '⌂' : role === 'Admin' ? '◆' : '✦'}</span>{role}<small>{role === 'Student' ? 'Learn & connect' : role === 'Teacher' ? 'Guide & manage' : role === 'Hostel / Canteen' ? 'Serve & support' : role === 'Admin' ? 'Operate campus' : 'Make an impact'}</small>
+                </button>
+              ))}
+            </div>
+            <button type="button" className="primary-button auth-button" disabled={!student.role} onClick={() => setAuthStep(2)}>Continue <span>→</span></button>
+          </> : <>
+          <button type="button" className="back-button" onClick={() => setAuthStep(1)}>← Change role</button>
+          <h2>Tell us about you</h2>
+          <p className="auth-subtitle">Type your details so Campus Copilot can tailor your day.</p>
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <label>
@@ -168,9 +173,10 @@ function App() {
             </label>
 
             <button type="submit" className="primary-button auth-button">
-              Continue
+              Enter Campus Copilot <span>→</span>
             </button>
           </form>
+          </>}
         </div>
       </div>
     );
